@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import { Repeat } from "typescript-tuple"; // for Board
@@ -46,22 +46,38 @@ const Board = (props: BoardProps) => {
     </div>
   );
 };
+// Gameパート:手番とか色々もっててBoardをたくさん持ってる
+type Step = {
+  squares: BoardState;
+  xIsNext: boolean;
+};
+type GameState = {
+  readonly history: Step[];
+  readonly stepNumber: number;
+};
 
-class Game extends React.Component {
-  render() {
-    return (
-      <div className="game">
-        <div className="game-board">
-          <Board />
-        </div>
-        <div className="game-info">
-          <div>{/* status */}</div>
-          <ol>{/* TODO */}</ol>
-        </div>
+const Game = () => {
+  const [state, setState] = useState<GameState>({
+    history: [
+      {
+        squares: [null, null, null, null, null, null, null, null, null],
+        xIsNext: true,
+      },
+    ],
+    stepNumber: 0,
+  });
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board squares={current.squares} onClick={handleClick} />
       </div>
-    );
-  }
-}
+      <div className="game-info">
+        <div>{status}</div>
+        <ol>{moves}</ol>
+      </div>
+    </div>
+  );
+};
 
 // ========================================
 
