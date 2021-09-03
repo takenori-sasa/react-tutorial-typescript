@@ -1,14 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-class Square extends React.Component {
-  render() {
-    return <button className="square">{/* TODO */}</button>;
-  }
-}
+// Squareパート:一個の四角だけ担当
+type SquareState = "O" | "X" | null;
+type SquareProps = {
+  value: SquareState;
+  onClick: () => void;
+};
+const Square = (props: SquareProps) => (
+  <button className="square" onClick={props.onClick}>
+    {props.value}
+  </button>
+);
 
 class Board extends React.Component {
-  renderSquare(i) {
+  renderSquare(i: number) {
     return <Square />;
   }
 
